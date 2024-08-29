@@ -72,6 +72,7 @@ class DefaultNotificationHelper @Inject constructor(
         val notificationUpdate = getBaseTimerServiceNotification()
             .setContentTitle(applicationContext.getString(currentPhase.readableName))
             .setContentText(formatMillisecondsToTimeString(timeLeftInMillis))
+            .setPriority(NotificationCompat.PRIORITY_LOW)
             .addAction(
                 R.drawable.ic_stop,
                 applicationContext.getString(R.string.pause),
@@ -96,6 +97,7 @@ class DefaultNotificationHelper @Inject constructor(
         val notificationUpdate = getBaseTimerServiceNotification()
             .setContentTitle(title)
             .setContentText(formatMillisecondsToTimeString(timeLeftInMillis))
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
             .addAction(
                 R.drawable.ic_play,
                 applicationContext.getString(R.string.resume),
