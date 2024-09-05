@@ -32,9 +32,9 @@ class ITActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val activityViewModel: ITActivityViewModel = hiltViewModel()
-            val appPreferences by activityViewModel.appPreferences.observeAsState()
+            val appPreferencesLiveData by activityViewModel.appPreferences.observeAsState()
 
-            appPreferences?.let { appPreferences ->
+            appPreferencesLiveData?.let { appPreferences ->
                 val showAppInstructionsDialog = !appPreferences.appInstructionsDialogShown
                 val darkTheme = when (appPreferences.selectedTheme) {
                     ThemeSelection.SYSTEM -> isSystemInDarkTheme()
