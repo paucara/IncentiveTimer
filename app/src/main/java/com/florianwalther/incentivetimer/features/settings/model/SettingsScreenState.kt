@@ -13,6 +13,7 @@ data class SettingsScreenState(
     val showLongBreakLengthDialog: Boolean,
     val showPomodorosPerSetDialog: Boolean,
     val showAppInstructionsDialog: Boolean,
+    val showRestartPomodoroDialog: Boolean /*:D*/
 ) {
     companion object {
         val initialState = SettingsScreenState(
@@ -33,6 +34,7 @@ data class SettingsScreenState(
             showLongBreakLengthDialog = false,
             showPomodorosPerSetDialog = false,
             showAppInstructionsDialog = false,
+            showRestartPomodoroDialog = false /*:D*/
         )
     }
 }

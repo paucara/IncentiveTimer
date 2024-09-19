@@ -26,6 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.florianwalther.incentivetimer.BuildConfig
 import com.florianwalther.incentivetimer.R
 import com.florianwalther.incentivetimer.core.ui.composables.AppInstructionsDialog
@@ -193,6 +194,23 @@ fun SettingsScreenContent(
             onDismissRequest = actions::onAppInstructionsDialogDismissed
         )
     }
+    if (screenState.showRestartPomodoroDialog){ /*:D*/
+        RestartPomodoroDialog(actions::onRestartPomodoroClicked)
+    }
+}
+
+@Composable /*:D*/
+fun RestartPomodoroDialog(onClick : () -> Unit) {
+    AlertDialog(
+        onDismissRequest = {onClick()},
+        text = { Text("Would you like restart pomodoro?") },
+        title = { Text("Alert") },
+        confirmButton = {
+            TextButton(onClick = {onClick()}) {
+                Text(stringResource(R.string.ok))
+            }
+        }
+    )
 }
 
 @Composable

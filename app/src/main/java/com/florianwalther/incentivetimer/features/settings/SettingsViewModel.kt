@@ -21,23 +21,27 @@ class SettingsViewModel @Inject constructor(
     private val timerPreferences = preferencesManager.timerPreferences
 
     private val showThemeDialog =
-        savedStateHandle.getLiveData<Boolean>("showThemeDialog", false)
+        savedStateHandle.getLiveData("showThemeDialog", false)
 
     private val showPomodoroLengthDialog =
-        savedStateHandle.getLiveData<Boolean>("showPomodoroLengthDialog", false)
+        savedStateHandle.getLiveData("showPomodoroLengthDialog", false)
 
     private val showShortBreakLengthDialog =
-        savedStateHandle.getLiveData<Boolean>("showShortBreakLengthDialog", false)
+        savedStateHandle.getLiveData("showShortBreakLengthDialog", false)
 
     private val showLongBreakLengthDialog =
-        savedStateHandle.getLiveData<Boolean>("showLongBreakLengthDialog", false)
+        savedStateHandle.getLiveData("showLongBreakLengthDialog", false)
 
     private val showPomodorosPerSetDialog =
-        savedStateHandle.getLiveData<Boolean>("showPomodorosPerSetDialog", false)
+        savedStateHandle.getLiveData("showPomodorosPerSetDialog", false)
 
     private val showAppInstructionsDialog =
-        savedStateHandle.getLiveData<Boolean>("showAppInstructionsDialog", false)
+        savedStateHandle.getLiveData("showAppInstructionsDialog", false)
 
+    private val showRestartPomodoroDialog = /*:D*/
+        savedStateHandle.getLiveData("showRestartPomodoroDialog", false)
+
+    //Problamente haya otra forma de combinar los flows
     val screenState = combineTuple(
         appPreferences,
         timerPreferences,
@@ -47,6 +51,7 @@ class SettingsViewModel @Inject constructor(
         showLongBreakLengthDialog.asFlow(),
         showPomodorosPerSetDialog.asFlow(),
         showAppInstructionsDialog.asFlow(),
+        showRestartPomodoroDialog.asFlow() /*:D*/
     ).map { (
                 appPreferences,
                 timerPreferences,
@@ -56,6 +61,7 @@ class SettingsViewModel @Inject constructor(
                 showLongBreakLengthDialog,
                 showPomodorosPerSetDialog,
                 showAppInstructionsDialog,
+                showRestartPomodoroDialog
             ) ->
         SettingsScreenState(
             appPreferences = appPreferences,
@@ -66,6 +72,7 @@ class SettingsViewModel @Inject constructor(
             showLongBreakLengthDialog = showLongBreakLengthDialog,
             showPomodorosPerSetDialog = showPomodorosPerSetDialog,
             showAppInstructionsDialog = showAppInstructionsDialog,
+            showRestartPomodoroDialog = showRestartPomodoroDialog
         )
     }.asLiveData()
 
@@ -92,6 +99,7 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch {
             preferencesManager.updatePomodoroLength(lengthInMinutes)
             showPomodoroLengthDialog.value = false
+            showRestartPomodoroDialog.value = true /* activa el dialogo de reinicio del pomodoro */
         }
     }
 
@@ -156,5 +164,9 @@ class SettingsViewModel @Inject constructor(
 
     override fun onAppInstructionsDialogDismissed() {
         showAppInstructionsDialog.value = false
+    }
+
+    override fun onRestartPomodoroClicked() {
+        showRestartPomodoroDialog.value = false
     }
 }

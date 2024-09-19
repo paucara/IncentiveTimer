@@ -21,4 +21,6 @@ interface SettingsScreenActions {
     fun onThemePreferenceClicked()
     fun onThemeSelected(theme: ThemeSelection)
     fun onThemeDialogDismissed()
+
+    fun onRestartPomodoroClicked() /*:D*/
 }
